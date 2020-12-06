@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  mono:
+    image: mono
+    volumes:
+      - ./SpecFlow3Net48:/project
+    working_dir: /project
+    environment:
+      DOTNET_RUNNING_IN_CONTAINER: 1
+    command: bash -c "
+             nuget restore SpecFlow3Net48.csproj &&
+             msbuild SpecFlow3Net48.csproj &&
+             mono ./bin/Debug/net48/SpecFlowPlusRunner/net461/SpecRun.exe run default.srprofile --baseFolder ./bin/Debug/net48/ --log log"

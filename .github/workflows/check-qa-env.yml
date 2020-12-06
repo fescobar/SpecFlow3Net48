@@ -1,0 +1,27 @@
+name: SpecFlow3Net48
+
+on:
+  push:
+    branches: 
+      - "*"
+  pull_request:
+    branches: 
+      - "*"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Pulling code
+      uses: actions/checkout@v2
+    
+    - name: Install packages
+      run: nuget restore SpecFlow3Net48/SpecFlow3Net48.csproj
+
+    - name: Build
+      run: msbuild SpecFlow3Net48/SpecFlow3Net48.csproj
+
+    - name: Tests
+      run: ./SpecFlow3Net48/bin/Debug/net48/SpecFlowPlusRunner/net461/SpecRun.exe run default.srprofile --baseFolder ./SpecFlow3Net48/bin/Debug/net48/
